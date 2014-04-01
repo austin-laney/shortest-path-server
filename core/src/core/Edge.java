@@ -13,8 +13,9 @@ package core;
 public class Edge {
     
     //constructor
-    Edge(Vertex destination, int distance)
+    Edge(Vertex origin, Vertex destination, int distance)
     {
+        this._origin = origin;
         this._desintination = destination;
         this._distance = distance;
     }

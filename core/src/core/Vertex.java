@@ -24,7 +24,7 @@ public class Vertex {
     //private member variables
     private List<Edge> _edges;
     private Integer _identifier;
-        
+    
     //private internal methods
     
     //public instance methods

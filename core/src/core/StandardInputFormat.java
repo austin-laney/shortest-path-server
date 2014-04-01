@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,42 +20,53 @@ import java.util.List;
 public class StandardInputFormat {
     //constructor
     StandardInputFormat(InputStream stream) throws IOException{
+        this._graphEdges = new ArrayList<Edge>();
+        
+        int currentOrigin = 0;
+        int currentDestination = 0;
+        int currentDistance = 0;
+        
         int index = 1;
-            byte[] data = new byte[2]; //two byte (16 bit) increments
-            while( stream.read( data )  != -1 )  { //read input to end
-                ByteBuffer buffer = ByteBuffer.wrap( data )
-                                              .order(ByteOrder.BIG_ENDIAN);
+        byte[] data = new byte[2]; //two byte (16 bit) increments
+        while( stream.read( data )  != -1 )  { //read input to end
+            ByteBuffer buffer = ByteBuffer.wrap( data )
+                                          .order(ByteOrder.BIG_ENDIAN);
 
-                short value = buffer.getShort();
-                //Cycle threw data and assign vertices and edges
-                if(index > 3){//edge data                
-                    int sub = (index % 3);
-                    switch(sub){
-                        case 1:
-                            //edge origin  = value
-                            break;
-                        case 2:
-                            //edge destination = value
-                            break;
-                        default:
-                            //edge distance = value
-                            break;
-                    }
-                } else {//sudo header data
-                    switch(index){
-                        case 1:
-                            //start vertex = value
-                            break;
-                        case 2:
-                            //end vertex = value
-                            break;
-                        default:
-                            //edge count = value
-                            break;
-                    }
+            short value = buffer.getShort();
+            //Cycle threw data and assign vertices and edges
+            if(index > 3){//edge data                
+                int sub = (index % 3);
+                switch(sub){
+                    case 1:
+                        currentOrigin = value;
+                        break;
+                    case 2:
+                        currentDestination = value;
+                        break;
+                    default://should be 0
+                        this._graphEdges.add(
+                                new Edge(
+                                        new Vertex(currentOrigin, currentDestination, value));
+                        break;
+                }
+            } else {//sudo header data
+                switch(index){
+                    case 1:
+                        this._startingVertexIdentifier = value;
+                        break;
+                    case 2:
+                        this._endingVertexIdentifier = value;
+                        break;
+                    default:
+                        this._numberOfGraphEdges = value;
+                        break;
                 }
             }
             index++;
+        }
+        
+        
+        stream.close();
     }
     
     private int _startingVertexIdentifier;

@@ -6,12 +6,8 @@
 
 package core;
 
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Dictionary;
 /**
  *
  * @author charles.strong
@@ -24,8 +20,9 @@ public class DirectedGraph {
         
         this._isAcyclic = NullableBoolean.NOTSET;
         this._vertices = new ArrayList<Vertex>();
+        this._edgeCount = edgeCount;
         
-        this.BuildGraph();
+        this.BuildGraph(edges);
 
         //determine if is acyclic
         this.IsAcyclic();
@@ -36,17 +33,21 @@ public class DirectedGraph {
     private NullableBoolean _isAcyclic;
     
     private List<Vertex> _vertices;
+    private int _edgeCount;
     
     //private instance methods
-    private void BuildGraph()
+    private void BuildGraph(List<Edge> edges)
     {
-        
+        for(Edge edge : edges)
+        {
+            if(!this._vertices.contains(edge.GetOrigin()))
+            {
+                this._vertices.add(edge.GetOrigin());
+            }
+           //get the current vertex (eg: edge.origin)
+        }
     }
     
-    private void AddVertex(Vertex vertex)
-    {
-        this._vertices.add(vertex);
-    }
     
     //public methods
     public boolean IsAcyclic()
@@ -67,6 +68,8 @@ public class DirectedGraph {
     {
         return this._vertices;
     }
+    
+    
     
     public void FindShortestPath(int originID, int destinationID)
     {
