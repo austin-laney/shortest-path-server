@@ -19,7 +19,8 @@ public class Edge {
         this._distance = distance;
     }
     
-    //private member variables
+    //private member variables    
+    private Vertex _origin;
     private Vertex _desintination;
     private Integer _distance;
    
@@ -27,6 +28,11 @@ public class Edge {
     public Vertex GetDestination()
     {
         return this._desintination;
+    }
+    
+    public Vertex GetOrigin()
+    {
+        return this._origin;
     }
     
     public int GetDistance()

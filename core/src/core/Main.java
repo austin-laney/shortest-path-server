@@ -6,8 +6,11 @@
 
 package core;
 
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  *
@@ -21,14 +24,17 @@ public class Main {
 		
     public static void main(String[] args) {
         
-        try (ServerSocket server = new ServerSocket( 7777 );
-             Socket socket = server.accept())
+        try (ServerSocket server = new ServerSocket( 7777 ); Socket socket = server.accept())
         {
-            //send recieved values to DirectedGraph
-            DirectedGraph graph = new DirectedGraph(socket.getInputStream());
+            InputStream stream = socket.getInputStream();
             
-            graph.FindShortestPath(1, 1);
-            //this wont work the stream is already closed.
+            StandardInputFormat input = InputFormatter.FormatInputStandard(stream);
+        
+            //send recieved values to DirectedGraph
+            DirectedGraph graph = new DirectedGraph(input.GetGraphEdges(), input.GetNumberOfGraphEdges());
+            
+            graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
+            
         }
         catch(Exception ex)
         {
