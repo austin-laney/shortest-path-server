@@ -6,11 +6,13 @@
 
 package core;
 
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /**
  *
  * @author charles.strong
  */
-
 public class Main {
 
     /**
@@ -19,9 +21,20 @@ public class Main {
 		
     public static void main(String[] args) {
         
-        //Connect to Socket as server port: 7777
-        //upon connection received read message stream
-        //instanciated Directed Graph and apply received values
+        try (ServerSocket server = new ServerSocket( 7777 );
+             Socket socket = server.accept())
+        {
+            //send recieved values to DirectedGraph
+            DirectedGraph graph = new DirectedGraph(socket.getInputStream());
+            
+            graph.FindShortestPath(1, 1);
+            //this wont work the stream is already closed.
+        }
+        catch(Exception ex)
+        {
+            //something went wrong
+        }
+        
         //run Shortest Path algorythm using the given start and end vertices
         //return result in printed format specified
     }

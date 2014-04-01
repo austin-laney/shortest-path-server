@@ -6,6 +6,9 @@
 
 package core;
 
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 import java.util.ArrayList;
 /**
@@ -15,16 +18,49 @@ import java.util.ArrayList;
 public class DirectedGraph {
     
     //constructor
-    DirectedGraph()
+    DirectedGraph(InputStream stream)
     {
+        
         this._isAcyclic = NullableBoolean.NOTSET;
         this._vertices = new ArrayList<Vertex>();
+        try
+        {
+            this.BuildGraph(stream);
+            
+            //determine if is acyclic
+            this.IsAcyclic();
+            
+            stream.close();
+        }
+        catch(Exception ex)
+        {
+            //Mostlikely a read exception
+        }
+        
     }
     
     //private member variables
     private NullableBoolean _isAcyclic;
     
     private List<Vertex> _vertices;
+    
+    //private instance methods
+    private void BuildGraph(InputStream stream) throws java.io.IOException 
+    {
+        byte[] data = new byte[2]; //two byte (16 bit) increments
+        while( stream.read( data )  != -1 )  { //read input to end
+            ByteBuffer buffer = ByteBuffer.wrap( data )
+                                          .order(ByteOrder.BIG_ENDIAN);
+            
+            short value = buffer.getShort();
+            //Cycle threw data and assign vertices and edges
+        }
+    }
+    
+    private void AddVertex(Vertex vertex)
+    {
+        this._vertices.add(vertex);
+    }
     
     //public methods
     public boolean IsAcyclic()
@@ -40,15 +76,18 @@ public class DirectedGraph {
         
         return (this._isAcyclic == NullableBoolean.TRUE);
     }
-    
-    public void AddVertex(Vertex vertex)
-    {
-        this._vertices.add(vertex);
-    }
-    
+      
     public List<Vertex> GetVertices()
     {
         return this._vertices;
+    }
+    
+    public void FindShortestPath(int originID, int destinationID)
+    {
+        if(!this.IsAcyclic())
+            return;//Add error: Wee only want Acyclic Graphs
+        
+        //logic here
     }
     
 }

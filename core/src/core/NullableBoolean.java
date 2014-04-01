@@ -12,5 +12,4 @@ package core;
  */
 public enum NullableBoolean {
     NOTSET, TRUE, FALSE
-
 }
