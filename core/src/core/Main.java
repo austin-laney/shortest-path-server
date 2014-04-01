@@ -10,13 +10,20 @@ package core;
  *
  * @author charles.strong
  */
+
 public class Main {
 
     /**
      * @param args the command line arguments
      */
+		
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        //Connect to Socket as server port: 7777
+        //upon connection received read message stream
+        //instanciated Directed Graph and apply received values
+        //run Shortest Path algorythm using the given start and end vertices
+        //return result in printed format specified
     }
     
 }
