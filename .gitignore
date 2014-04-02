@@ -19,3 +19,7 @@
 
 # Directories
 bin/
+
+# Eclipse Project related files
+*.classpath
+*.project
