@@ -18,8 +18,7 @@
 package core;
 
 import java.util.Set;
-/**
- *
+/*
  * @author charles.strong
  */
 public class DirectedGraph {
