@@ -11,6 +11,7 @@ import java.util.ArrayList;
 /**
  *
  * @author charles.strong
+ * converted back to eclipse after git for netbeans failed 
  */
 public class DirectedGraph {
     
