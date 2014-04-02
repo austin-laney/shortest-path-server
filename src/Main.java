@@ -9,8 +9,6 @@ package core;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 /**
  *
@@ -31,7 +29,7 @@ public class Main {
             StandardInputFormat input = InputFormatter.FormatInputStandard(stream);
         
             //send recieved values to DirectedGraph
-            DirectedGraph graph = new DirectedGraph(input.GetGraphEdges(), input.GetNumberOfGraphEdges());
+            DirectedGraph graph = new DirectedGraph(input.GetVertices(), input.GetGraphEdges());
             
             graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
             

@@ -10,8 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  *
@@ -20,12 +19,14 @@ import java.util.List;
 public class StandardInputFormat {
     //constructor
     StandardInputFormat(InputStream stream) throws IOException{
-        this._graphEdges = new ArrayList<Edge>();
+        this._graphEdges = new HashSet<Edge>();
         
         int currentOrigin = 0;
         int currentDestination = 0;
-        int currentDistance = 0;
         
+        //Was using lists but this needs to be unique;
+        
+        this._vertices = new HashSet();
         int index = 1;
         byte[] data = new byte[2]; //two byte (16 bit) increments
         while( stream.read( data )  != -1 )  { //read input to end
@@ -38,15 +39,16 @@ public class StandardInputFormat {
                 int sub = (index % 3);
                 switch(sub){
                     case 1:
+                        this._vertices.add(value);
                         currentOrigin = value;
                         break;
                     case 2:
+                        this._vertices.add(value);
                         currentDestination = value;
                         break;
                     default://should be 0
                         this._graphEdges.add(
-                                new Edge(
-                                        new Vertex(currentOrigin, currentDestination, value));
+                             new Edge(currentOrigin, currentDestination, value));
                         break;
                 }
             } else {//sudo header data
@@ -72,7 +74,8 @@ public class StandardInputFormat {
     private int _startingVertexIdentifier;
     private int _endingVertexIdentifier;
     private int _numberOfGraphEdges;
-    private List<Edge> _graphEdges;
+    private HashSet<Edge> _graphEdges;
+    private HashSet _vertices;
     
     //public instance methods
     public int GetStartingVertexIdentifier()
@@ -90,9 +93,14 @@ public class StandardInputFormat {
         return this._numberOfGraphEdges;
     }
     
-    public List<Edge> GetGraphEdges()
+    public HashSet<Edge> GetGraphEdges()
     {
         return this._graphEdges;
+    }
+    
+    public HashSet GetVertices()
+    {
+        return this._vertices;
     }
     
 }

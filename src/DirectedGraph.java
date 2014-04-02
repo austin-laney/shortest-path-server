@@ -6,25 +6,20 @@
 
 package core;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
 /**
  *
  * @author charles.strong
- * converted back to eclipse after git for netbeans failed 
  */
 public class DirectedGraph {
     
     //constructor
-    DirectedGraph( List<Edge> edges, Integer edgeCount)
+    DirectedGraph(HashSet vertices, HashSet<Edge> edges)
     {
-        
         this._isAcyclic = NullableBoolean.NOTSET;
-        this._vertices = new ArrayList<Vertex>();
-        this._edgeCount = edgeCount;
+        this._vertices = vertices;
+        this._edges = edges;
         
-        this.BuildGraph(edges);
-
         //determine if is acyclic
         this.IsAcyclic();
        
@@ -33,23 +28,9 @@ public class DirectedGraph {
     //private member variables
     private NullableBoolean _isAcyclic;
     
-    private List<Vertex> _vertices;
-    private int _edgeCount;
-    
-    //private instance methods
-    private void BuildGraph(List<Edge> edges)
-    {
-        for(Edge edge : edges)
-        {
-            if(!this._vertices.contains(edge.GetOrigin()))
-            {
-                this._vertices.add(edge.GetOrigin());
-            }
-           //get the current vertex (eg: edge.origin)
-        }
-    }
-    
-    
+    private HashSet _vertices;
+    private HashSet<Edge> _edges;
+      
     //public methods
     public boolean IsAcyclic()
     {
@@ -65,12 +46,20 @@ public class DirectedGraph {
         return (this._isAcyclic == NullableBoolean.TRUE);
     }
       
-    public List<Vertex> GetVertices()
+    public HashSet GetVertices()
     {
         return this._vertices;
     }
     
+    public HashSet<Edge> GetEdges()
+    {
+        return this._edges;
+    }
     
+    public int GetNumberOfEdges()
+    {
+        return this._edges.size();
+    }
     
     public void FindShortestPath(int originID, int destinationID)
     {
