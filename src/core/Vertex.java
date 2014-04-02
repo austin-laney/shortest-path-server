@@ -53,12 +53,19 @@ public class Vertex {
         return this._edges;
     }
     
-    public int GetHashCode()
+    public int GetClosestVertexIdentifier()
     {
-    	
-        return Integer.toString(this._identifier,2).hashCode();
+    	Edge shortestEdge = new Edge(0,0,Integer.MAX_VALUE);
+    	for(Edge edge : this._edges)
+    	{
+    		if(edge.GetDistance() < shortestEdge.GetDistance())
+    		{
+    			shortestEdge = edge;
+    		}
+    	}
+    	return shortestEdge.GetDestination();
     }
-    
+      
     public void SetAsChecked()
     {
     	this._checkedAllEdges = true;
@@ -69,6 +76,15 @@ public class Vertex {
     	return this._checkedAllEdges;
     }
     
+   //Overrides
+    @Override
+    public int hashCode()
+    {
+    	
+        return Integer.toString(this._identifier,2).hashCode();
+    }
+    
+    @Override
     public boolean equals(Object o)
     {
         Vertex obj = (Vertex)o;
@@ -77,7 +93,7 @@ public class Vertex {
             return false;
         }
     
-        return this.GetIdentifier() == obj.GetIdentifier();
+        return this._identifier == obj.GetIdentifier();
     }
 
 }

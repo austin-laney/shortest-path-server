@@ -55,7 +55,9 @@ public class Edge {
     //now that I am using set for vertices I also want to use it for this
     //"complex" HAHA object
     //this means I need to override GetHashCode and Equals
-    public int GetHashCode()
+    //Overrides
+    @Override
+    public int hashCode()
     {
         StringBuilder builder = new StringBuilder();
         builder.append(Integer.toString(this.GetOrigin(),2));
@@ -65,6 +67,7 @@ public class Edge {
         return builder.toString().hashCode();
     }
     
+    @Override
     public boolean equals(Object o)
     {
         Edge obj = (Edge)o;

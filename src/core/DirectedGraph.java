@@ -17,7 +17,10 @@
 
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 /*
  * @author charles.strong
  */
@@ -44,7 +47,7 @@ public class DirectedGraph {
     //public methods
     public boolean IsAcyclic()
     {
-        //A digraph can be Acyclic only if there are no Directed loops
+        //A directed graph can be Acyclic only if there are no Directed loops
         //Meaning you cannot start and return to any given vertex
         //(following path direction)
         
@@ -57,6 +60,16 @@ public class DirectedGraph {
         
         return (this._isAcyclic == NullableBoolean.TRUE);
     }
+    
+    public int GetGraphSize()//Graph size is defined as the number of edges in a directed graph
+    {
+    	return this._edges.size();
+    }
+    
+    public int GetGraphOrder()//graph order is defined as the number of vertices in a graph
+    {
+    	return this._vertices.size();
+    }
       
     public Set<Vertex> GetVertices()
     {
@@ -66,18 +79,52 @@ public class DirectedGraph {
     public Set<Edge> GetEdges()
     {
         return this._edges;
-    }
-    
-    public int GetNumberOfEdges()
-    {
-        return this._edges.size();
-    }
+    }    
     
     public void FindShortestPath(int origin, int destination)
     {
         if(!this.IsAcyclic())
-            return;//Add error: Wee only want Acyclic Graphs
+            return;//Add error: We only want Acyclic Graphs
+        
+        Vertex startVertex = this.GetVertexWithIdentifier(origin);
+        
+        int TotalDistance = Integer.MAX_VALUE;
+        Vertex currentVertex = startVertex;
+        List<Path> paths = new ArrayList<Path>();
+        
+        while (this.GetUncheckedVertices().size() > 0)
+        {
+        	  //
+        }
        
     }
     
+    //private methods
+    
+    private Set<Vertex> GetUncheckedVertices()
+    {
+    	Set<Vertex> uncheckedVertices = new HashSet<Vertex>();
+    	for(Vertex vertex : this._vertices)
+    	{
+    		if(!vertex.HasBeenChecked())
+    		{
+    			uncheckedVertices.add(vertex);
+    		}
+    	}
+    	
+    	return uncheckedVertices;
+    }
+
+    private Vertex GetVertexWithIdentifier(int identifier)
+    {
+    	Vertex identifiedVertex = null;
+    	for(Vertex vertex : this._vertices)
+    	{
+    		if(vertex.GetIdentifier() == identifier)
+    		{
+    			identifiedVertex = vertex;
+    		}
+    	}
+    	return identifiedVertex;
+    }
 }

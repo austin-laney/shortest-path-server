@@ -38,7 +38,7 @@ public class Main {
             
             StandardInputFormat input = InputFormatter.FormatInputStandard(stream);
         
-            //send recieved values to DirectedGraph
+            //send received values to DirectedGraph
             DirectedGraph graph = new DirectedGraph(input.GetVertices(), input.GetGraphEdges());
             
             graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
@@ -49,7 +49,7 @@ public class Main {
             //something went wrong
         }
         
-        //run Shortest Path algorythm using the given start and end vertices
+        //run Shortest Path algorithm using the given start and end vertices
         //return result in printed format specified
     }
     
