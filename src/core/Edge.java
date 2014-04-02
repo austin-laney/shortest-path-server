@@ -52,7 +52,7 @@ public class Edge {
         return this._distance;
     }
     
-    //now that I am using hashset for vertices I also whant to use it for this
+    //now that I am using set for vertices I also want to use it for this
     //"complex" HAHA object
     //this means I need to override GetHashCode and Equals
     public int GetHashCode()

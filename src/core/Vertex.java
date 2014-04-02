@@ -27,11 +27,20 @@ public class Vertex {
 	
 	Vertex(int identifier, Set<Edge> edges)
     {
+		this._identifier = identifier;
+		for(Edge edge : edges)
+		{
+			if(edge.GetOrigin() == identifier)
+			{
+				this._edges.add(edge);
+			}
+		}
     }
     
     //private member variables    
     private int _identifier;
     private Set<Edge> _edges;
+    private boolean _checkedAllEdges = false;
     
     //public instance methods
     public int GetIdentifier()
@@ -39,17 +48,25 @@ public class Vertex {
         return this._identifier;
     }
     
-    public Set<Edge> GetOrigin()
+    public Set<Edge> GetEdges()
     {
         return this._edges;
     }
     
-    //now that I am using hashset for vertices I also whant to use it for this
-    //"complex" HAHA object
-    //this means I need to override GetHashCode and Equals
     public int GetHashCode()
-    {                        
+    {
+    	
         return Integer.toString(this._identifier,2).hashCode();
+    }
+    
+    public void SetAsChecked()
+    {
+    	this._checkedAllEdges = true;
+    }
+    
+    public boolean HasBeenChecked()
+    {
+    	return this._checkedAllEdges;
     }
     
     public boolean equals(Object o)

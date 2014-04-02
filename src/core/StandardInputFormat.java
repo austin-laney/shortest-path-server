@@ -80,9 +80,9 @@ public class StandardInputFormat {
         stream.close();
     }
     
-    private int _startingVertexIdentifier;
-    private int _endingVertexIdentifier;
-    private int _numberOfGraphEdges;
+    private int _startingVertexIdentifier = 0;
+    private int _endingVertexIdentifier = 0;
+    private int _numberOfGraphEdges = 0;
     private Set<Edge> _graphEdges = new HashSet<Edge>();
     private Set<Integer> _vertices = new HashSet<Integer>();;
     
@@ -107,9 +107,14 @@ public class StandardInputFormat {
         return this._graphEdges;
     }
     
-    public Set<Integer> GetVertices()
+    public Set<Vertex> GetVertices()
     {
-        return this._vertices;
+    	HashSet<Vertex> vertices = new HashSet<Vertex>();
+    	for(int id : this._vertices)
+    	{
+    		vertices.add(new Vertex(id, this._graphEdges));
+    	}
+        return vertices;
     }
     
 }
