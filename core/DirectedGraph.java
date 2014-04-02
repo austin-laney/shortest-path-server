@@ -6,7 +6,7 @@
 
 package core;
 
-import java.util.HashSet;
+import java.util.Set;
 /**
  *
  * @author charles.strong
@@ -61,12 +61,11 @@ public class DirectedGraph {
         return this._edges.size();
     }
     
-    public void FindShortestPath(int originID, int destinationID)
+    public void FindShortestPath(int origin, int destination)
     {
         if(!this.IsAcyclic())
             return;//Add error: Wee only want Acyclic Graphs
-        
-        //logic here
+		
     }
     
 }
