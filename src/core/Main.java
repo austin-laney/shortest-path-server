@@ -9,7 +9,6 @@ package core;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 /**
  *
  * @author charles.strong

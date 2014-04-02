@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Set;
 import java.util.HashSet;
-
 /**
  *
  * @author charles.strong
@@ -19,14 +19,12 @@ import java.util.HashSet;
 public class StandardInputFormat {
     //constructor
     StandardInputFormat(InputStream stream) throws IOException{
-        this._graphEdges = new HashSet<Edge>();
-        
+    	
         int currentOrigin = 0;
         int currentDestination = 0;
         
         //Was using lists but this needs to be unique;
         
-        this._vertices = new HashSet();
         int index = 1;
         byte[] data = new byte[2]; //two byte (16 bit) increments
         while( stream.read( data )  != -1 )  { //read input to end
@@ -39,11 +37,11 @@ public class StandardInputFormat {
                 int sub = (index % 3);
                 switch(sub){
                     case 1:
-                        this._vertices.add(value);
+                        this._vertices.add((int)value);
                         currentOrigin = value;
                         break;
                     case 2:
-                        this._vertices.add(value);
+                        this._vertices.add((int)value);
                         currentDestination = value;
                         break;
                     default://should be 0
@@ -74,8 +72,8 @@ public class StandardInputFormat {
     private int _startingVertexIdentifier;
     private int _endingVertexIdentifier;
     private int _numberOfGraphEdges;
-    private HashSet<Edge> _graphEdges;
-    private HashSet _vertices;
+    private Set<Edge> _graphEdges = new HashSet<Edge>();
+    private Set<Integer> _vertices = new HashSet<Integer>();;
     
     //public instance methods
     public int GetStartingVertexIdentifier()
@@ -93,12 +91,12 @@ public class StandardInputFormat {
         return this._numberOfGraphEdges;
     }
     
-    public HashSet<Edge> GetGraphEdges()
+    public Set<Edge> GetGraphEdges()
     {
         return this._graphEdges;
     }
     
-    public HashSet GetVertices()
+    public Set<Integer> GetVertices()
     {
         return this._vertices;
     }

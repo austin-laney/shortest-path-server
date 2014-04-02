@@ -14,7 +14,7 @@ import java.util.Set;
 public class DirectedGraph {
     
     //constructor
-    DirectedGraph(HashSet vertices, HashSet<Edge> edges)
+    DirectedGraph(Set<Integer> vertices, Set<Edge> edges)
     {
         this._isAcyclic = NullableBoolean.NOTSET;
         this._vertices = vertices;
@@ -28,8 +28,8 @@ public class DirectedGraph {
     //private member variables
     private NullableBoolean _isAcyclic;
     
-    private HashSet _vertices;
-    private HashSet<Edge> _edges;
+    private Set<Integer> _vertices;
+    private Set<Edge> _edges;
       
     //public methods
     public boolean IsAcyclic()
@@ -46,12 +46,12 @@ public class DirectedGraph {
         return (this._isAcyclic == NullableBoolean.TRUE);
     }
       
-    public HashSet GetVertices()
+    public Set<Integer> GetVertices()
     {
         return this._vertices;
     }
     
-    public HashSet<Edge> GetEdges()
+    public Set<Edge> GetEdges()
     {
         return this._edges;
     }
@@ -65,7 +65,7 @@ public class DirectedGraph {
     {
         if(!this.IsAcyclic())
             return;//Add error: Wee only want Acyclic Graphs
-		
+       
     }
     
 }
