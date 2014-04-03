@@ -31,14 +31,13 @@ import java.util.HashSet;
  */
 public class StandardInputFormat {
     //constructor
-    StandardInputFormat(InputStream stream) throws IOException{
+    public StandardInputFormat(InputStream stream) throws IOException{
     	
         int currentOrigin = 0;
         int currentDestination = 0;
         
         //Was using lists but this needs to be unique;
         //now using sets
-        
         int index = 1;
         byte[] data = new byte[2]; //two byte (16 bit) increments
         while( stream.read( data )  != -1 )  { //read input to end

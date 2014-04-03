@@ -24,7 +24,7 @@ package core;
 public class Edge {
     
     //constructor
-    Edge(int origin, int destination, int distance)
+    public Edge(int origin, int destination, int distance)
     {
         this._origin = origin;
         this._desintination = destination;

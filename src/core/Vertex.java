@@ -17,6 +17,7 @@
 
 package core;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Set;
 */
 public class Vertex {
 	
-	Vertex(int identifier, Set<Edge> edges)
+	public Vertex(int identifier, Set<Edge> edges)
     {
 		this._identifier = identifier;
 		for(Edge edge : edges)
@@ -37,9 +38,9 @@ public class Vertex {
     
     //private member variables    
     private int _identifier;
-    private Set<Edge> _edges;
+    private Set<Edge> _edges = new HashSet<Edge>();
     private int _distanceToOrigin = Integer.MAX_VALUE;
-    private boolean _checkedAllEdges = false;
+    private boolean _checkedAllEdges = true;
     private int _previousVertexIdentifier = Integer.MIN_VALUE;
     
     //public instance methods
@@ -55,13 +56,23 @@ public class Vertex {
     
     public int GetClosestVertexIdentifier()
     {
-    	Edge shortestEdge = new Edge(0,0,Integer.MAX_VALUE);
+    	return this.GetShortestEdge().GetDestination();
+    	
+    }
+    
+    public Edge GetShortestEdge()
+    {
+    	Edge shortestEdge = null;
     	for(Edge edge : this._edges)
     	{
+    		if(shortestEdge == null)
+    			shortestEdge = edge;
     		if(edge.GetDistance() < shortestEdge.GetDistance())
     			shortestEdge = edge;
     	}
-    	return shortestEdge.GetDestination();
+    	
+    	return shortestEdge;
+    	
     }
     
     public int GetDistanceToOrigin()
@@ -77,6 +88,11 @@ public class Vertex {
     public void SetAsChecked()
     {
     	this._checkedAllEdges = true;
+    }
+    
+    public void SetAsUnChecked()
+    {
+    	this._checkedAllEdges = false;
     }
     
     public boolean HasBeenChecked()

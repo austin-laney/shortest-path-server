@@ -18,8 +18,10 @@
 package core;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 /**
  *
  * @author charles.strong
@@ -30,32 +32,28 @@ public class Main {
      * @param args the command line arguments
      */
 		
-    public static void main(String[] args) {
-        
+    public static void main(String[] args)
+    {    	
         try (ServerSocket server = new ServerSocket( 7777 ); Socket socket = server.accept())
         {
-            InputStream stream = socket.getInputStream();
-            
-            StandardInputFormat input = InputFormatter.FormatInputStandard(stream);
-        
+            InputStream inputStream = socket.getInputStream();
+            //format the input stream
+            StandardInputFormat input = InputFormatter.FormatInputStandard(inputStream);
             //send received values to DirectedGraph
             DirectedGraph graph = new DirectedGraph(input.GetVertices(), input.GetGraphEdges());
-            
             //compute result
             String result = graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
-            
-            //There is no way that I can find to write to an input stream. 
-        	//Maybe if there was an authentication handshake (two physical devices)
-        	//or if the file name was passed via the input stream (locally ran eg: 127.0.0.1)
-        	//just print the result to the system console
-            System.out.println(result);
-            
+            //stream result back to the client
+            OutputStream resultStream = socket.getOutputStream();
+            //the client would need to update the file descriptor with the result set
+			resultStream.write(result.getBytes());	
+			//close the connection
+			resultStream.close();
             
         }
-        catch(Exception ex)
+        catch(Exception ex)//something went wrong
         {
-            //something went wrong
-        	//need to add real handling
+        	System.out.println(ex.getMessage().getBytes());
         }
         
     }

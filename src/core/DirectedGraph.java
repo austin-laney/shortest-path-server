@@ -19,14 +19,14 @@ package core;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.HashSet;
+
 /*
  * @author charles.strong
  */
 public class DirectedGraph {
     
     //constructor
-    DirectedGraph(Map<Integer,Vertex> vertices, Set<Edge> edges)
+    public DirectedGraph(Map<Integer,Vertex> vertices, Set<Edge> edges)
     {
         this._isAcyclic = NullableBoolean.NOTSET;
         this._vertices = vertices;
@@ -86,6 +86,9 @@ public class DirectedGraph {
             return "Error: Graph is not acyclic" ;//Add error: We only want Acyclic Graphs ** possible future use
         
         Vertex startVertex = this.GetVertexWithIdentifier(origin);
+        
+        startVertex.SetDistanceToOrigin(0);
+        startVertex.SetAsUnChecked();
                 
         int totalDistance = Integer.MAX_VALUE;
         
@@ -114,28 +117,23 @@ public class DirectedGraph {
 
         if(totalDistance == Integer.MAX_VALUE)
         {
-        	//the bellman-ford algorithm "step 1: initialize()" is completed already on vertex instantiation.
-        	//TOO MANY CYCLES to do an iterative loop to find vertices as a Set<Object>
-        	//Moved to Map<int,Object>
+        	//Soooooo.. Started with Dijkstra's solution. Studied a MIT lecture and materials on shortest k algorithms
+        	//Decided to start over implement Bellman-Ford's algorithm. After rewriting 2/3 of all of the solution items
+        	//I started another lecture
+        	//and I changed my mind and went back to Dijkstra's...
+        	//Given the input this is the most straight forward approach to solving the problem 
+        	//if we were to have negative edge distances or the possibility of negative cycles
+        	//Bellman-Ford would be a better solution
+            for (Vertex vertex : this._vertices.values()) {
+            	if(!vertex.HasBeenChecked())
+            	{
+	              Vertex nextVertex = this.GetNextVertex();
+	              nextVertex.SetAsChecked();
+	              this.CheckDestinations(nextVertex);
+            	}
+            }
         	
-        	// Step 2: relax edges
-        	for(Edge edge : this._edges)
-        	{
-        		Vertex edgeOrigin = this.GetVertexWithIdentifier(edge.GetOrigin());
-        		Vertex edgeDestination = this.GetVertexWithIdentifier(edge.GetDestination());
-        		int originDistance = edgeOrigin.GetDistanceToOrigin();
-        		int destinationDistance = edgeDestination.GetDistanceToOrigin();
-        		
-        		if(originDistance + edge.GetDistance() < destinationDistance)
-        		{
-        			edgeDestination.SetDistanceToOrigin(edgeOrigin.GetDistanceToOrigin() + edge.GetDistance());
-        			edgeDestination.SetPreviousVertexIdentifier(edgeOrigin.GetIdentifier());
-        		}
-        	}
-        	
-        	//we can skip the third step of the bellman-ford algorithm "check for negative cycles"
-        	//because our input is guaranteed to be positive by definition
-        	
+            //read the results
         	Vertex vertex = this.GetVertexWithIdentifier(destination);
         	totalDistance = vertex.GetDistanceToOrigin();
     		String result = Integer.toString(destination);
@@ -148,30 +146,53 @@ public class DirectedGraph {
     			decision = String.format(ResultStrings.PATH_NOT_FOUND, origin, destination);
     		
     		else
-    			decision = String.format("%s (%d)", result, totalDistance);
+    			decision = String.format("%d->%s (%d)",origin, result, totalDistance);
     			
         	
         }
         
+        //return the results
         return decision;
     }
 
     //private methods
     
-    private Set<Vertex> GetUncheckedVertices()//No longer being used... but could be useful in the future.
-    {
-    	Set<Vertex> uncheckedVertices = new HashSet<Vertex>();
-    	for(Vertex vertex : this._vertices.values())
-    	{
-    		if(!vertex.HasBeenChecked())
-    			uncheckedVertices.add(vertex);
-    	}
-    	
-    	return uncheckedVertices;
-    }
-
     private Vertex GetVertexWithIdentifier(int identifier)
     {
     	return this._vertices.get(identifier);
     }
+    
+    private Vertex GetNextVertex()
+    {
+        Vertex nextVertex = null;
+        for (Vertex vertex : this._vertices.values()) {
+        	if(!vertex.HasBeenChecked())
+        	{
+	          if (nextVertex == null)
+	          {
+	        	  nextVertex = vertex;
+	          } else {
+	            if (vertex.GetDistanceToOrigin() < nextVertex.GetDistanceToOrigin()) {
+	            	nextVertex = vertex;
+	            }
+	          }
+        	}
+        }
+        return this.GetVertexWithIdentifier(nextVertex.GetIdentifier());
+    }
+    
+    public void CheckDestinations(Vertex origin)
+    {
+    	for(Edge edge : origin.GetEdges())
+    	{
+    		 Vertex workingVertex = this.GetVertexWithIdentifier(edge.GetDestination());
+			 if (workingVertex.GetDistanceToOrigin() > origin.GetDistanceToOrigin() + edge.GetDistance())
+			 {
+				 	workingVertex.SetDistanceToOrigin(origin.GetDistanceToOrigin() + edge.GetDistance());
+		            workingVertex.SetPreviousVertexIdentifier(origin.GetIdentifier());
+		            workingVertex.SetAsUnChecked();
+		     }
+    	}    	
+    }
+    
 }
