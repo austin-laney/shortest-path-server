@@ -35,12 +35,13 @@ public class StandardInputFormat {
         int currentDestination = 0;
         
         //Was using lists but this needs to be unique;
+        //now using sets
         
         int index = 1;
         byte[] data = new byte[2]; //two byte (16 bit) increments
         while( stream.read( data )  != -1 )  { //read input to end
             ByteBuffer buffer = ByteBuffer.wrap( data )
-                                          .order(ByteOrder.BIG_ENDIAN);
+                                          .order(ByteOrder.LITTLE_ENDIAN);
 
             short value = buffer.getShort();
             //Cycle threw data and assign vertices and edges

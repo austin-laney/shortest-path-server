@@ -50,13 +50,11 @@ public class DirectedGraph {
         //(following path direction)
         
         if(this._isAcyclic == NullableBoolean.NOTSET)
-        {
-            //add logic to determine if this DirectedGraph is acyclic
+        	this._isAcyclic = NullableBoolean.TRUE;
+        	//add logic to determine if this DirectedGraph is acyclic
         	//currently unneeded because we are told that all input graphs are acyclic
         	//but if you would like to expand the program this makes it possible.
         	//for now just set to true
-        	this._isAcyclic = NullableBoolean.TRUE;
-        }
         
         return (this._isAcyclic == NullableBoolean.TRUE);
     }
@@ -157,15 +155,13 @@ public class DirectedGraph {
 
     //private methods
     
-    private Set<Vertex> GetUncheckedVertices()
+    private Set<Vertex> GetUncheckedVertices()//No longer being used... but could be useful in the future.
     {
     	Set<Vertex> uncheckedVertices = new HashSet<Vertex>();
     	for(Vertex vertex : this._vertices)
     	{
     		if(!vertex.HasBeenChecked())
-    		{
     			uncheckedVertices.add(vertex);
-    		}
     	}
     	
     	return uncheckedVertices;
@@ -177,9 +173,7 @@ public class DirectedGraph {
     	for(Vertex vertex : this._vertices)
     	{
     		if(vertex.GetIdentifier() == identifier)
-    		{
     			identifiedVertex = vertex;
-    		}
     	}
     	return identifiedVertex;
     }

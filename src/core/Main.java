@@ -41,13 +41,13 @@ public class Main {
             //send received values to DirectedGraph
             DirectedGraph graph = new DirectedGraph(input.GetVertices(), input.GetGraphEdges());
             
+            //compute result
             String result = graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
             
             //There is no way that I can find to write to an input stream. 
         	//Maybe if there was an authentication handshake (two physical devices)
         	//or if the file name was passed via the input stream (locally ran eg: 127.0.0.1)
         	//just print the result to the system console
-                    	
             System.out.println(result);
             
             
@@ -55,6 +55,7 @@ public class Main {
         catch(Exception ex)
         {
             //something went wrong
+        	//need to add real handling
         }
         
     }

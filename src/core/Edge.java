@@ -72,9 +72,7 @@ public class Edge {
     {
         Edge obj = (Edge)o;
         if (obj == null)
-        {
             return false;
-        }
     
         return this.GetOrigin() == obj.GetOrigin() &&
                 this.GetDestination() == obj.GetDestination() &&

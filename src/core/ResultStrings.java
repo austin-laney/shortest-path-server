@@ -26,7 +26,4 @@ public final class ResultStrings {
     public static final String START_CONNECTED_TO_END = "%d->%d (%d)";
     public static final String PATH_FOUND = "%d->%s";
     public static final String PATH_NOT_FOUND = "No path from '%d' to '%d'";
-
-    private ResultStrings(){
-    }  
 }

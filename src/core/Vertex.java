@@ -31,9 +31,7 @@ public class Vertex {
 		for(Edge edge : edges)
 		{
 			if(edge.GetOrigin() == identifier)
-			{
 				this._edges.add(edge);
-			}
 		}		
     }
     
@@ -61,9 +59,7 @@ public class Vertex {
     	for(Edge edge : this._edges)
     	{
     		if(edge.GetDistance() < shortestEdge.GetDistance())
-    		{
     			shortestEdge = edge;
-    		}
     	}
     	return shortestEdge.GetDestination();
     }
@@ -102,7 +98,6 @@ public class Vertex {
     @Override
     public int hashCode()
     {
-    	
         return Integer.toString(this._identifier,2).hashCode();
     }
     
@@ -111,9 +106,7 @@ public class Vertex {
     {
         Vertex obj = (Vertex)o;
         if (obj == null)
-        {
             return false;
-        }
     
         return this._identifier == obj.GetIdentifier();
     }
