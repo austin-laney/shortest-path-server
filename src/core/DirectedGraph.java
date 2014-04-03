@@ -17,6 +17,7 @@
 
 package core;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 /*
@@ -25,7 +26,7 @@ import java.util.HashSet;
 public class DirectedGraph {
     
     //constructor
-    DirectedGraph(Set<Vertex> vertices, Set<Edge> edges)
+    DirectedGraph(Map<Integer,Vertex> vertices, Set<Edge> edges)
     {
         this._isAcyclic = NullableBoolean.NOTSET;
         this._vertices = vertices;
@@ -39,7 +40,7 @@ public class DirectedGraph {
     //private member variables
     private NullableBoolean _isAcyclic;
     
-    private Set<Vertex> _vertices;
+    private Map<Integer,Vertex> _vertices;
     private Set<Edge> _edges;
       
     //public methods
@@ -69,7 +70,7 @@ public class DirectedGraph {
     	return this._vertices.size();
     }
       
-    public Set<Vertex> GetVertices()
+    public Map<Integer,Vertex> GetVertices()
     {
         return this._vertices;
     }
@@ -114,6 +115,8 @@ public class DirectedGraph {
         if(totalDistance == Integer.MAX_VALUE)
         {
         	//the bellman-ford algorithm "step 1: initialize()" is completed already on vertex instantiation.
+        	//TOO MANY CYCLES to do an iterative loop to find vertices as a Set<Object>
+        	//Moved to Map<int,Object>
         	
         	// Step 2: relax edges
         	for(Edge edge : this._edges)
@@ -158,7 +161,7 @@ public class DirectedGraph {
     private Set<Vertex> GetUncheckedVertices()//No longer being used... but could be useful in the future.
     {
     	Set<Vertex> uncheckedVertices = new HashSet<Vertex>();
-    	for(Vertex vertex : this._vertices)
+    	for(Vertex vertex : this._vertices.values())
     	{
     		if(!vertex.HasBeenChecked())
     			uncheckedVertices.add(vertex);
@@ -169,12 +172,6 @@ public class DirectedGraph {
 
     private Vertex GetVertexWithIdentifier(int identifier)
     {
-    	Vertex identifiedVertex = null;
-    	for(Vertex vertex : this._vertices)
-    	{
-    		if(vertex.GetIdentifier() == identifier)
-    			identifiedVertex = vertex;
-    	}
-    	return identifiedVertex;
+    	return this._vertices.get(identifier);
     }
 }

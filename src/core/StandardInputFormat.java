@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 /**
@@ -49,11 +51,11 @@ public class StandardInputFormat {
                 int sub = (index % 3);
                 switch(sub){
                     case 1:
-                        this._vertices.add((int)value);
+                        this._vertices.put((int)value, null);
                         currentOrigin = value;
                         break;
                     case 2:
-                        this._vertices.add((int)value);
+                        this._vertices.put((int)value, null);
                         currentDestination = value;
                         break;
                     default://should be 0
@@ -84,7 +86,7 @@ public class StandardInputFormat {
     private int _endingVertexIdentifier = 0;
     private int _numberOfGraphEdges = 0;
     private Set<Edge> _graphEdges = new HashSet<Edge>();
-    private Set<Integer> _vertices = new HashSet<Integer>();;
+    private Map<Integer,Vertex> _vertices = new HashMap<Integer,Vertex>();;
     
     //public instance methods
     public int GetStartingVertexIdentifier()
@@ -107,14 +109,13 @@ public class StandardInputFormat {
         return this._graphEdges;
     }
     
-    public Set<Vertex> GetVertices()
+    public Map<Integer,Vertex> GetVertices()
     {
-    	HashSet<Vertex> vertices = new HashSet<Vertex>();
-    	for(int id : this._vertices)
+    	for(int identifier : this._vertices.keySet())
     	{
-    		vertices.add(new Vertex(id, this._graphEdges));
+    		this._vertices.put(identifier,  new Vertex(identifier, this._graphEdges));
     	}
-        return vertices;
+        return this._vertices;
     }
     
 }
