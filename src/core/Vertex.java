@@ -34,13 +34,15 @@ public class Vertex {
 			{
 				this._edges.add(edge);
 			}
-		}
+		}		
     }
     
     //private member variables    
     private int _identifier;
     private Set<Edge> _edges;
+    private int _distanceToOrigin = Integer.MAX_VALUE;
     private boolean _checkedAllEdges = false;
+    private int _previousVertexIdentifier = Integer.MIN_VALUE;
     
     //public instance methods
     public int GetIdentifier()
@@ -65,6 +67,16 @@ public class Vertex {
     	}
     	return shortestEdge.GetDestination();
     }
+    
+    public int GetDistanceToOrigin()
+    {
+    	return this._distanceToOrigin;
+    }
+    
+    public void SetDistanceToOrigin(int distance)
+    {
+    	this._distanceToOrigin = distance;
+    }
       
     public void SetAsChecked()
     {
@@ -74,6 +86,16 @@ public class Vertex {
     public boolean HasBeenChecked()
     {
     	return this._checkedAllEdges;
+    }
+    
+    public void SetPreviousVertexIdentifier(int identifier)
+    {
+    	this._previousVertexIdentifier = identifier;
+    }
+    
+    public int GetPreviousVertexIdentifier()
+    {
+    	return this._previousVertexIdentifier;
     }
     
    //Overrides

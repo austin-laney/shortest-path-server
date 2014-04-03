@@ -84,7 +84,7 @@ public class DirectedGraph {
     public String FindShortestPath(int origin, int destination)
     {
         if(!this.IsAcyclic())
-            return "Error: Graph is not acyclic" ;//Add error: We only want Acyclic Graphs
+            return "Error: Graph is not acyclic" ;//Add error: We only want Acyclic Graphs ** possible future use
         
         Vertex startVertex = this.GetVertexWithIdentifier(origin);
                 
@@ -97,7 +97,7 @@ public class DirectedGraph {
         if(origin == destination)
         {
     		totalDistance = 0;
-    		decision = String.format("%d->%d (0) START AND END ARE EQUAL", origin, destination);
+    		decision = String.format(ResultStrings.START_END_EQUAL, origin, destination);
         }
     	else//is the end directly connected to the start via a single edge?
     	{
@@ -108,20 +108,53 @@ public class DirectedGraph {
     			if(edge.GetDestination() == destination)
     			{
     				totalDistance = edge.GetDistance();
-    				decision = String.format("%d->%d (%d)", origin, destination, totalDistance);
+    				decision = String.format(ResultStrings.START_CONNECTED_TO_END, origin, destination, totalDistance);
     			}
     		}
     	}
-        
-        Vertex currentVertex = startVertex;
+
         if(totalDistance == Integer.MAX_VALUE)
         {
+        	//the bellman-ford algorithm "step 1: initialize()" is completed already on vertex instantiation.
+        	
+        	// Step 2: relax edges
+        	for(Edge edge : this._edges)
+        	{
+        		Vertex edgeOrigin = this.GetVertexWithIdentifier(edge.GetOrigin());
+        		Vertex edgeDestination = this.GetVertexWithIdentifier(edge.GetDestination());
+        		int originDistance = edgeOrigin.GetDistanceToOrigin();
+        		int destinationDistance = edgeDestination.GetDistanceToOrigin();
+        		
+        		if(originDistance + edge.GetDistance() < destinationDistance)
+        		{
+        			edgeDestination.SetDistanceToOrigin(edgeOrigin.GetDistanceToOrigin() + edge.GetDistance());
+        			edgeDestination.SetPreviousVertexIdentifier(edgeOrigin.GetIdentifier());
+        		}
+        	}
+        	
+        	//we can skip the third step of the bellman-ford algorithm "check for negative cycles"
+        	//because our input is guaranteed to be positive by definition
+        	
+        	Vertex vertex = this.GetVertexWithIdentifier(destination);
+        	totalDistance = vertex.GetDistanceToOrigin();
+    		String result = Integer.toString(destination);
+    		while( vertex.GetPreviousVertexIdentifier() != Integer.MIN_VALUE && vertex.GetPreviousVertexIdentifier() != origin )
+    		{
+    			vertex = this.GetVertexWithIdentifier(vertex.GetPreviousVertexIdentifier());
+    			result = String.format(ResultStrings.PATH_FOUND, vertex.GetIdentifier(), result);
+    		}
+    		if( vertex.GetPreviousVertexIdentifier() == Integer.MIN_VALUE )
+    			decision = String.format(ResultStrings.PATH_NOT_FOUND, origin, destination);
+    		
+    		else
+    			decision = result;
+    			
         	
         }
         
-       
+        return decision;
     }
-    
+
     //private methods
     
     private Set<Vertex> GetUncheckedVertices()

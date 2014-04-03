@@ -41,7 +41,15 @@ public class Main {
             //send received values to DirectedGraph
             DirectedGraph graph = new DirectedGraph(input.GetVertices(), input.GetGraphEdges());
             
-            graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
+            String result = graph.FindShortestPath(input.GetStartingVertexIdentifier(), input.GetEndingVertexIdentifier());
+            
+            //There is no way that I can find to write to an input stream. 
+        	//Maybe if there was an authentication handshake (two physical devices)
+        	//or if the file name was passed via the input stream (locally ran eg: 127.0.0.1)
+        	//just print the result to the system console
+                    	
+            System.out.println(result);
+            
             
         }
         catch(Exception ex)
@@ -49,8 +57,6 @@ public class Main {
             //something went wrong
         }
         
-        //run Shortest Path algorithm using the given start and end vertices
-        //return result in printed format specified
     }
     
 }
