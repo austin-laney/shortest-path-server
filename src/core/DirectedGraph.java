@@ -17,8 +17,6 @@
 
 package core;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 /*
@@ -54,6 +52,8 @@ public class DirectedGraph {
         if(this._isAcyclic == NullableBoolean.NOTSET)
         {
             //add logic to determine if this DirectedGraph is acyclic
+        	//currently unneeded because we are told that all input graphs are acyclic
+        	//but if you would like to expand the program this makes it possible.
         	//for now just set to true
         	this._isAcyclic = NullableBoolean.TRUE;
         }
@@ -81,21 +81,44 @@ public class DirectedGraph {
         return this._edges;
     }    
     
-    public void FindShortestPath(int origin, int destination)
+    public String FindShortestPath(int origin, int destination)
     {
         if(!this.IsAcyclic())
-            return;//Add error: We only want Acyclic Graphs
+            return "Error: Graph is not acyclic" ;//Add error: We only want Acyclic Graphs
         
         Vertex startVertex = this.GetVertexWithIdentifier(origin);
+                
+        int totalDistance = Integer.MAX_VALUE;
         
-        int TotalDistance = Integer.MAX_VALUE;
-        Vertex currentVertex = startVertex;
-        List<Path> paths = new ArrayList<Path>();
+        String decision = "";
         
-        while (this.GetUncheckedVertices().size() > 0)
+        //quick answers
+    	//is the start also the end?
+        if(origin == destination)
         {
-        	  //
+    		totalDistance = 0;
+    		decision = String.format("%d->%d (0) START AND END ARE EQUAL", origin, destination);
         }
+    	else//is the end directly connected to the start via a single edge?
+    	{
+    		//we can assume this is correct because the weights are all unsigned integers 
+    		//All paths will be positive
+    		for(Edge edge : startVertex.GetEdges())
+    		{
+    			if(edge.GetDestination() == destination)
+    			{
+    				totalDistance = edge.GetDistance();
+    				decision = String.format("%d->%d (%d)", origin, destination, totalDistance);
+    			}
+    		}
+    	}
+        
+        Vertex currentVertex = startVertex;
+        if(totalDistance == Integer.MAX_VALUE)
+        {
+        	
+        }
+        
        
     }
     
