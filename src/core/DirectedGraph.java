@@ -99,7 +99,7 @@ public class DirectedGraph {
         }
     	else//is the end directly connected to the start via a single edge?
     	{
-    		//we can assume this is correct because the weights are all unsigned integers 
+    		//we can assume this is correct because the distances are all unsigned integers 
     		//All paths will be positive
     		for(Edge edge : startVertex.GetEdges())
     		{
@@ -145,7 +145,7 @@ public class DirectedGraph {
     			decision = String.format(ResultStrings.PATH_NOT_FOUND, origin, destination);
     		
     		else
-    			decision = result;
+    			decision = String.format("%s (%d)", result, totalDistance);
     			
         	
         }
