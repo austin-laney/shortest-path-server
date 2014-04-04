@@ -101,21 +101,14 @@ public class DirectedGraph {
     		totalDistance = 0;
     		decision = String.format(ResultStrings.START_END_EQUAL, origin, destination);
         }
-    	else//is the end directly connected to the start via a single edge?
-    	{
-    		//we can assume this is correct because the distances are all unsigned integers 
-    		//All paths will be positive
-    		for(Edge edge : startVertex.GetEdges())
-    		{
-    			if(edge.GetDestination() == destination)
-    			{
-    				totalDistance = edge.GetDistance();
-    				decision = String.format(ResultStrings.START_CONNECTED_TO_END, origin, destination, totalDistance);
-    			}
-    		}
-    	}
-
-        if(totalDistance == Integer.MAX_VALUE)
+        // had a step for checking if the origin and destination were directly connected
+        // I realized that assumption to be incorrect.
+        //1  2  3
+        //1->2 (4)
+        //1->3 (1)
+        //2->3 (1)
+        //result 1->3->2 (2) NOT 1->2 (4)
+        else
         {
         	//Soooooo.. Started with Dijkstra's solution. Studied a MIT lecture and materials on shortest k algorithms
         	//Decided to start over implement Bellman-Ford's algorithm. After rewriting 2/3 of all of the solution items
