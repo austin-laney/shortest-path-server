@@ -27,8 +27,8 @@ What is the difference between IPv4 and IPv6?
 I was under the assumption at first that this was only created to resolve network
 addressing issues. Which is only a small part. IPv6 brings many new optimized items
 to network addressing. Like:
--128 bit addressing instead of the 32bit octet of its predecessor.
--Also the removal of NAT
+*128 bit addressing instead of the 32bit octet of its predecessor.
+*Also the removal of NAT
 
 What is the difference between TCP, UDP, & IP?
 
@@ -71,11 +71,13 @@ Once I finished my research I determined that in this use case: Bellman-Fords ap
 would be more costly in cycles (even though the inputs are small). Finally returning the
 program to the Dijkstra algorithm. 
 
-Here is what I added to the projected. The input is wrapped in a formatter class. This 
-gives me the opportunity to expand for other input formats in the future without having
-to refactor. The DiGraph class has an method (though skeletonized) to determine if the
-graph is acyclic. If completed this gives me the opportunity to add a method for the
-Bellman-Ford algorithm, and choose Dijkstra or Bellman-Ford based upon graph topology.
+Here is what I added to the projected.
+
+The input is wrapped in a formatter class. This gives me the opportunity to expand for
+other input formats in the future without having to refactor. The DiGraph class has an
+method (though skeletonized) to determine if the graph is acyclic. If completed this
+gives me the opportunity to add a method for the Bellman-Ford algorithm, and choose
+Dijkstra or Bellman-Ford based upon graph topology.
 
 The result is sent back to the client via the open socket connection in a byte stream.
 I hoped to have this to you earlier in the week, but I completed this around my normal
@@ -84,6 +86,7 @@ work schedule and my family.
 Again, thank you for talking to me and giving me the opportunity to do this. I did enjoy it.
 
 Suggestions for the project
+
 None of the file meta data is sent along with the input. Without this, having the server
 update the FileDescriptor seemed a little confusing. Should the server make its own 
 copy and save the result to that or write a client application to accompany the server
