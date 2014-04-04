@@ -27,8 +27,8 @@ What is the difference between IPv4 and IPv6?
 I was under the assumption at first that this was only created to resolve network
 addressing issues. Which is only a small part. IPv6 brings many new optimized items
 to network addressing. Like:
-*128 bit addressing instead of the 32bit octet of its predecessor.
-*Also the removal of NAT
+* 128 bit addressing instead of the 32bit octet of its predecessor.
+* Also the removal of NAT
 
 What is the difference between TCP, UDP, & IP?
 
