@@ -41,11 +41,11 @@ Build Instructions
 
 you can open this as a project in Eclipse and run or use the javac command compiler
 //compiler
-*cd %PATH_TO_PROJECT%/src
+* cd %PATH_TO_PROJECT%/src
 //-verbose is optional
-*%JAVA_HOME%/javac.exe -verbose -sourcepath ./core/*.java
+* %JAVA_HOME%/javac.exe -verbose -sourcepath ./core/*.java
 //start server
-*java core.Main
+* java core.Main
 
 
 Requirements
