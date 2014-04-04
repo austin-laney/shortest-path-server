@@ -147,7 +147,6 @@ public class DirectedGraph {
     		
     		else
     			decision = String.format("%d->%s (%d)",origin, result, totalDistance);
-    			
         	
         }
         
@@ -169,12 +168,13 @@ public class DirectedGraph {
         	if(!vertex.HasBeenChecked())
         	{
 	          if (nextVertex == null)
-	          {
 	        	  nextVertex = vertex;
-	          } else {
-	            if (vertex.GetDistanceToOrigin() < nextVertex.GetDistanceToOrigin()) {
+	          
+	          else
+	          {
+	            if (vertex.GetDistanceToOrigin() < nextVertex.GetDistanceToOrigin()) 
 	            	nextVertex = vertex;
-	            }
+	            
 	          }
         	}
         }
