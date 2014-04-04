@@ -37,7 +37,7 @@ Solution Notes
 My notes a fairly lengthy and I added them in a separate file ./NOTES.md
 
 Build Instructions
-------------------
+------------------_
 
 you can open this as a project in Eclipse and run or use the javac command compiler
 //compiler
