@@ -81,7 +81,7 @@ The result is sent back to the client via the open socket connection in a byte s
 I hoped to have this to you earlier in the week, but I completed this around my normal
 work schedule and my family. 
 
-Again, thank you for talking to me and giving me the opportunity to do this I did enjoy it.
+Again, thank you for talking to me and giving me the opportunity to do this. I did enjoy it.
 
 Suggestions for the project
 None of the file meta data is sent along with the input. Without this, having the server

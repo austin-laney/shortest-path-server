@@ -39,7 +39,7 @@ My notes a fairly lengthy and I added them in a separate file ./NOTES.md
 Build Instructions
 ------------------
 
-you can open this as a project in Eclipse and run or use the javac compiler
+you can open this as a project in Eclipse and run or use the javac command compiler
 //compiler
 cd %PATH_TO_PROJECT%/src
 //-verbose is optional
